@@ -1777,3 +1777,842 @@ len(t) != len(set(t))
 380. **How do you create a tuple from a string?**
 * Use the `tuple()` function: `tuple('string')`.
 
+---
+
+***Module 2***
+
+1. **Q:** What is Object‑Oriented Programming (OOP)?
+   **A:** A paradigm organizing code into “objects” that bundle data (attributes) and behavior (methods).
+
+2. **Q:** What is a class?
+   **A:** A blueprint for creating objects, defined with the `class` keyword.
+
+3. **Q:** How do you declare a simple class in Python?
+   **A:**
+
+   ```python
+   class MyClass:
+       pass
+   ```
+
+4. **Q:** What is an instance?
+   **A:** A concrete object created from a class, e.g. `obj = MyClass()`.
+
+5. **Q:** How do you initialize instance attributes?
+   **A:** In the `__init__` method:
+
+   ```python
+   class Person:
+       def __init__(self, name):
+           self.name = name
+   ```
+
+6. **Q:** What is the `self` parameter?
+   **A:** A reference to the current instance, used to access attributes/methods.
+
+7. **Q:** How do you access an attribute?
+   **A:** Using dot notation: `obj.attribute_name`.
+
+8. **Q:** How do you define a method?
+   **A:** Inside a class, with `def`, e.g.
+
+   ```python
+   def greet(self):
+       print(f"Hello, {self.name}")
+   ```
+
+9. **Q:** What are built‑in class attributes?
+   **A:** Special attributes provided by Python:
+
+   * `__name__`, `__doc__`, `__module__`, `__dict__`, `__bases__`.
+
+10. **Q:** How can you inspect an object’s namespace?
+    **A:** Using `obj.__dict__` (instance) or `ClassName.__dict__` (class).
+
+11. **Q:** What is a destructor in Python?
+    **A:** The `__del__` method, called when an object is about to be destroyed.
+
+12. **Q:** Why is relying on `__del__` discouraged?
+    **A:** Its execution timing isn’t guaranteed due to garbage collection.
+
+13. **Q:** How does Python destroy objects?
+    **A:** Via reference counting and garbage collection when no references remain.
+
+14. **Q:** What is inheritance?
+    **A:** A mechanism for a class (child) to inherit attributes/methods from another (parent).
+
+15. **Q:** How do you express single inheritance?
+    **A:**
+
+    ```python
+    class Child(Parent):
+        pass
+    ```
+
+16. **Q:** What is multiple inheritance?
+    **A:** A class inheriting from more than one parent:
+
+    ```python
+    class C(A, B):
+        pass
+    ```
+
+17. **Q:** What is method overriding?
+    **A:** Redefining a parent’s method in a child class to change behavior.
+
+18. **Q:** What is method overloading in Python?
+    **A:** Python doesn’t support true overloading; simulate with default args or `*args, **kwargs`.
+
+19. **Q:** How do you call a parent class’s method from a child?
+    **A:** Using `super()`, e.g. `super().method_name()`.
+
+20. **Q:** What is a class attribute?
+    **A:** A variable defined in the class body, shared by all instances.
+
+21. **Q:** How do you define a private attribute?
+    **A:** Prefix name with double underscore: `self.__secret`.
+
+22. **Q:** What is name mangling?
+    **A:** Python rewrites `__attr` to `_ClassName__attr` to prevent external access.
+
+23. **Q:** How do you access a mangled attribute?
+    **A:** By its mangled name: `obj._ClassName__secret`.
+
+24. **Q:** What is encapsulation?
+    **A:** Hiding internal state and requiring all interaction through methods.
+
+25. **Q:** What is data hiding?
+    **A:** Restricting access to attributes (using single `_` or double `__` prefixes).
+
+26. **Q:** What is polymorphism?
+    **A:** The ability for different classes to be treated through a common interface.
+
+27. **Q:** Give an example of polymorphism.
+    **A:** Both `list` and `tuple` support `len()`, so you can write code that works with any sequence.
+
+28. **Q:** What is an abstract class?
+    **A:** A class that can’t be instantiated, defined using the `abc` module.
+
+29. **Q:** How do you declare an abstract method?
+    **A:**
+
+    ```python
+    from abc import ABC, abstractmethod
+
+    class MyBase(ABC):
+        @abstractmethod
+        def do_something(self):
+            pass
+    ```
+
+30. **Q:** What happens if you don’t implement all abstract methods?
+    **A:** You cannot instantiate the subclass until all are overridden.
+
+31. **Q:** What is a mixin class?
+    **A:** A class designed to add reusable functionality through multiple inheritance.
+
+32. **Q:** How can you check if an object is an instance of a class?
+    **A:** Using `isinstance(obj, ClassName)`.
+
+33. **Q:** How can you check class inheritance?
+    **A:** Using `issubclass(Child, Parent)`.
+
+34. **Q:** What is a static method?
+    **A:** A method that doesn’t receive `self` or `cls`, defined with `@staticmethod`.
+
+35. **Q:** What is a class method?
+    **A:** A method that receives the class as first argument, decorated with `@classmethod`.
+
+36. **Q:** When would you use a static method?
+    **A:** For utility functions related to the class but not to any instance.
+
+37. **Q:** When would you use a class method?
+    **A:** To create alternate constructors or methods that operate on the class itself.
+
+38. **Q:** How do you define an alternate constructor?
+    **A:** With a `@classmethod`, e.g.:
+
+    ```python
+    @classmethod
+    def from_string(cls, data_str):
+        return cls(*data_str.split(','))
+    ```
+
+39. **Q:** What is composition?
+    **A:** Building classes that contain instances of other classes (has‑a relationship).
+
+40. **Q:** How does composition differ from inheritance?
+    **A:** Composition delegates tasks to contained objects; inheritance reuses code via subclassing.
+
+41. **Q:** Give an example of composition.
+    **A:**
+
+    ```python
+    class Engine: ...
+    class Car:
+        def __init__(self):
+            self.engine = Engine()
+    ```
+
+42. **Q:** What is duck typing?
+    **A:** “If it quacks like a duck…”—Python’s dynamic typing lets you use any object with the right methods/attributes.
+
+43. **Q:** How do you enforce read‑only attributes?
+    **A:** Use a property with only a getter:
+
+    ```python
+    @property
+    def value(self):
+        return self._value
+    ```
+
+44. **Q:** How do you define a property setter?
+    **A:**
+
+    ```python
+    @value.setter
+    def value(self, new):
+        self._value = new
+    ```
+
+45. **Q:** What is the `__slots__` declaration?
+    **A:** Restricts allowed attributes and can reduce memory footprint.
+
+46. **Q:** When should you use `__slots__`?
+    **A:** For many instances of simple classes where you want to save memory.
+
+47. **Q:** What is operator overloading?
+    **A:** Defining special methods (`__add__`, `__lt__`, etc.) to customize operators.
+
+48. **Q:** How do you overload the addition operator?
+    **A:**
+
+    ```python
+    def __add__(self, other):
+        return SomeClass(self.value + other.value)
+    ```
+
+49. **Q:** What is method resolution order (MRO)?
+    **A:** The order Python uses to look up methods, accessed via `ClassName.__mro__`.
+
+50. **Q:** How do you display a user‑friendly class representation?
+    **A:** Implement `__str__`; for unambiguous repr use `__repr__`.
+
+Here are questions **51–100** on **Python Exceptions & Regular Expressions**:
+
+51. **Q:** What is an exception in Python?
+    **A:** An event raised during execution when an error occurs, interrupting normal flow.
+
+52. **Q:** How do you catch exceptions?
+    **A:** With a `try…except` block:
+
+    ```python
+    try:
+        # code
+    except SomeError:
+        # handler
+    ```
+
+53. **Q:** What does the `else` clause do in exception handling?
+    **A:** Runs if no exception was raised in the `try` block.
+
+54. **Q:** What is the purpose of the `finally` clause?
+    **A:** Executes cleanup code whether or not an exception occurred.
+
+55. **Q:** How do you catch multiple exception types in one block?
+    **A:** Pass a tuple to `except`:
+
+    ```python
+    except (TypeError, ValueError):
+        # handler
+    ```
+
+56. **Q:** How can you access the exception object?
+    **A:** Using `as`, e.g. `except ValueError as e:`.
+
+57. **Q:** What happens if an exception isn’t caught?
+    **A:** It propagates up the call stack and, if uncaught, terminates the program.
+
+58. **Q:** How do you raise an exception?
+    **A:** Using `raise`, e.g. `raise ValueError("Bad value")`.
+
+59. **Q:** How do you define a custom exception class?
+    **A:** Inherit from `Exception`:
+
+    ```python
+    class MyError(Exception):
+        pass
+    ```
+
+60. **Q:** How can you add additional attributes to a user‑defined exception?
+    **A:** Extend `__init__`:
+
+    ```python
+    class MyError(Exception):
+        def __init__(self, msg, code):
+            super().__init__(msg)
+            self.code = code
+    ```
+
+61. **Q:** What built‑in exception is raised for division by zero?
+    **A:** `ZeroDivisionError`.
+
+62. **Q:** Which exception is raised when a key is missing in a dict?
+    **A:** `KeyError`.
+
+63. **Q:** Which exception indicates an invalid type operation?
+    **A:** `TypeError`.
+
+64. **Q:** Which exception indicates conversion failure?
+    **A:** `ValueError`.
+
+65. **Q:** How do you re‑raise the current exception?
+    **A:** Call `raise` with no arguments inside an `except`.
+
+66. **Q:** What module provides regular expression support?
+    **A:** The built‑in `re` module.
+
+67. **Q:** How do you check if a pattern matches at the start of a string?
+    **A:** `re.match(pattern, string)`.
+
+68. **Q:** How do you search for a pattern anywhere in a string?
+    **A:** `re.search(pattern, string)`.
+
+69. **Q:** What method returns all non‑overlapping matches?
+    **A:** `re.findall(pattern, string)`.
+
+70. **Q:** How do you iterate over match objects?
+    **A:** Use `re.finditer(pattern, string)`.
+
+71. **Q:** How do you replace matches with a substring?
+    **A:** `re.sub(pattern, repl, string)`.
+
+72. **Q:** How do you split a string by a regex?
+    **A:** `re.split(pattern, string)`.
+
+73. **Q:** What character matches any digit?
+    **A:** `\d`.
+
+74. **Q:** What matches any whitespace character?
+    **A:** `\s`.
+
+75. **Q:** What matches any word character (alphanumeric plus underscore)?
+    **A:** `\w`.
+
+76. **Q:** How do you specify “zero or more” of the preceding item?
+    **A:** Using `*` quantifier.
+
+77. **Q:** How do you specify “one or more”?
+    **A:** Using `+` quantifier.
+
+78. **Q:** How do you specify “zero or one”?
+    **A:** Using `?` quantifier.
+
+79. **Q:** What is the difference between greedy and non‑greedy quantifiers?
+    **A:** Greedy (`*`, `+`) match as much as possible; non‑greedy (`*?`, `+?`) match as little as possible.
+
+80. **Q:** How do you group subpatterns?
+    **A:** With parentheses: `(abc)`.
+
+81. **Q:** What is a named group?
+    **A:** A group with an identifier: `(?P<name>pattern)`.
+
+82. **Q:** How do you refer back to a captured group in the pattern?
+    **A:** Using `\1`, `\2`, etc., or `(?P=name)` for named groups.
+
+83. **Q:** How do you compile a regex for reuse?
+    **A:** `pattern = re.compile('...')`.
+
+84. **Q:** How do you apply flags when compiling?
+    **A:** Pass flags: `re.compile('...', re.I | re.M)`.
+
+85. **Q:** What does `re.I` (or `re.IGNORECASE`) do?
+    **A:** Makes matching case‑insensitive.
+
+86. **Q:** What does `re.M` (or `re.MULTILINE`) do?
+    **A:** `^` and `$` match the start/end of each line.
+
+87. **Q:** What does `re.S` (or `re.DOTALL`) do?
+    **A:** Lets `.` match newline characters.
+
+88. **Q:** How do you ensure the pattern matches the entire string?
+    **A:** Use `^pattern$`.
+
+89. **Q:** What is a raw string literal and why use it in regex?
+    **A:** Prefix with `r'...'` to avoid escaping backslashes twice.
+
+90. **Q:** How do you escape a metacharacter to match it literally?
+    **A:** Prefix with backslash, e.g. `\.` to match a dot.
+
+91. **Q:** How do you use lookahead assertions?
+    **A:**
+
+    * Positive: `(?=pattern)`
+    * Negative: `(?!pattern)`
+
+92. **Q:** How do you use lookbehind assertions?
+    **A:**
+
+    * Positive: `(?<=pattern)`
+    * Negative: `(?<!pattern)`
+
+93. **Q:** What function returns a match object?
+    **A:** Both `re.match()` and `re.search()`.
+
+94. **Q:** How do you get the matched text from a match object?
+    **A:** Use `.group()`, `.group(0)` or `.group(n)` for groups.
+
+95. **Q:** How do you find the start and end positions of a match?
+    **A:** Use `.start()`, `.end()` on the match object.
+
+96. **Q:** How do you get a dictionary of named groups from a match?
+    **A:** `.groupdict()`.
+
+97. **Q:** How can you perform a substitution using a function?
+    **A:** Pass a function as `re.sub(pattern, func, string)` where `func` receives a match.
+
+98. **Q:** How do you remove all whitespace from a string using regex?
+    **A:** `re.sub(r'\s+', '', text)`.
+
+99. **Q:** How do you split on comma but ignore commas inside quotes?
+    **A:** Use a pattern like `,(?=(?:[^"]*"[^"]*")*[^"]*$)`.
+
+100. **Q:** How do you validate an email address with regex?
+     **A:** Example pattern:
+     `python
+         r'^[\w\.-]+@[\w\.-]+\.\w+$'
+         `
+Here are questions **101–150** on **File Operations & Stacks/Queues**:
+
+101. **Q:** How do you open a file for reading?
+     **A:** `open('filename.txt', 'r')`
+
+102. **Q:** How do you open a file for writing (overwriting)?
+     **A:** `open('filename.txt', 'w')`
+
+103. **Q:** How do you open a file for appending?
+     **A:** `open('filename.txt', 'a')`
+
+104. **Q:** How do you open a file for both reading and writing?
+     **A:** `open('filename.txt', 'r+')`
+
+105. **Q:** What mode opens a file in binary read mode?
+     **A:** `'rb'`
+
+106. **Q:** What mode opens a file in binary write mode?
+     **A:** `'wb'`
+
+107. **Q:** How do you read the entire contents of a file at once?
+     **A:** `file.read()`
+
+108. **Q:** How do you read one line from a file?
+     **A:** `file.readline()`
+
+109. **Q:** How do you read all lines into a list?
+     **A:** `file.readlines()`
+
+110. **Q:** How do you iterate over a file line by line?
+     **A:**
+
+     ```python
+     for line in file:
+         # process line
+     ```
+
+111. **Q:** How do you write a string to a file?
+     **A:** `file.write('some text')`
+
+112. **Q:** How do you write multiple lines at once?
+     **A:** `file.writelines(['line1\n', 'line2\n'])`
+
+113. **Q:** How do you move the file cursor to the beginning?
+     **A:** `file.seek(0)`
+
+114. **Q:** How do you find the current cursor position?
+     **A:** `file.tell()`
+
+115. **Q:** How do you close a file?
+     **A:** `file.close()`
+
+116. **Q:** Why should you use a context manager for file operations?
+     **A:** It automatically closes the file even if errors occur.
+
+117. **Q:** How do you open a file using a context manager?
+     **A:**
+
+     ```python
+     with open('filename.txt', 'r') as file:
+         data = file.read()
+     ```
+
+118. **Q:** How do you handle file opening errors?
+     **A:** Wrap `open()` in a `try…except IOError` block.
+
+119. **Q:** How can you check if a file exists before opening?
+     **A:** Use `os.path.exists('filename.txt')`
+
+120. **Q:** How do you delete a file?
+     **A:** `os.remove('filename.txt')`
+
+121. **Q:** How do you rename a file?
+     **A:** `os.rename('old.txt', 'new.txt')`
+
+122. **Q:** How do you copy a file?
+     **A:** Use `shutil.copy('src.txt', 'dest.txt')`
+
+123. **Q:** What function reads a CSV file line by line?
+     **A:** The `csv.reader` in the `csv` module.
+
+124. **Q:** How do you write rows to a CSV file?
+     **A:** Use `csv.writer` and its `.writerow()` method.
+
+125. **Q:** How do you open a file exclusively (fail if it exists)?
+     **A:** `open('filename.txt', 'x')`
+
+126. **Q:** How do you truncate a file’s contents?
+     **A:** `file.truncate(size)` or open in write mode.
+
+127. **Q:** How do you flush the write buffer without closing?
+     **A:** `file.flush()`
+
+128. **Q:** What is a stack?
+     **A:** A Last-In, First-Out (LIFO) data structure.
+
+129. **Q:** How do you implement a stack using a Python list?
+     **A:** Use `append()` to push and `pop()` to pop.
+
+130. **Q:** How do you check if a stack is empty?
+     **A:** `if not stack:`
+
+131. **Q:** How do you peek at the top item of a stack?
+     **A:** `stack[-1]`
+
+132. **Q:** How do you get the size of a stack?
+     **A:** `len(stack)`
+
+133. **Q:** How do you clear all items from a stack?
+     **A:** `stack.clear()`
+
+134. **Q:** What is a queue?
+     **A:** A First-In, First-Out (FIFO) data structure.
+
+135. **Q:** How do you implement a queue using a Python list?
+     **A:** Use `append()` for enqueue and `pop(0)` for dequeue.
+
+136. **Q:** How do you check if a queue is empty?
+     **A:** `if not queue:`
+
+137. **Q:** How do you peek at the front item of a queue?
+     **A:** `queue[0]`
+
+138. **Q:** How do you get the size of a queue?
+     **A:** `len(queue)`
+
+139. **Q:** What is the time complexity of `pop(0)` on a list?
+     **A:** O(n), since it shifts elements.
+
+140. **Q:** How can you implement a more efficient queue?
+     **A:** Use `collections.deque` with `append()` and `popleft()`.
+
+141. **Q:** How do you import `deque`?
+     **A:** `from collections import deque`
+
+142. **Q:** How do you push onto a `deque`?
+     **A:** `dq.append(item)`
+
+143. **Q:** How do you pop from the right of a `deque`?
+     **A:** `dq.pop()`
+
+144. **Q:** How do you pop from the left of a `deque`?
+     **A:** `dq.popleft()`
+
+145. **Q:** What is a circular queue?
+     **A:** A fixed-size FIFO buffer that wraps around when it reaches the end.
+
+146. **Q:** How do you implement a circular queue in Python?
+     **A:** Use a fixed-size list with head/tail pointers and modulo arithmetic.
+
+147. **Q:** How can you use two stacks to implement a queue?
+     **A:** Push enqueues on `stack_in`; pop/dequeue from `stack_out`, transferring when empty.
+
+148. **Q:** How do you transfer items between two stacks?
+     **A:**
+
+     ```python
+     while stack_in:
+         stack_out.append(stack_in.pop())
+     ```
+
+149. **Q:** Why use two stacks for a queue?
+     **A:** To achieve amortized O(1) enqueue and dequeue operations.
+
+150. **Q:** What are common stack applications?
+     **A:** Expression evaluation, backtracking (e.g., undo), function call management.
+
+Here are questions **151–200** covering **NumPy, SciPy, SymPy & Pandas**:
+
+**NumPy & SciPy (151–170)**
+151\. **Q:** What is NumPy?
+**A:** A library for efficient numerical computation with N‑dimensional array objects.
+152\. **Q:** How do you import NumPy?
+**A:** `import numpy as np`
+153\. **Q:** How do you create a 1D NumPy array?
+**A:** `arr = np.array([1, 2, 3])`
+154\. **Q:** How do you create a 2×3 array of zeros?
+**A:** `np.zeros((2, 3))`
+155\. **Q:** How do you create an array of evenly spaced values?
+**A:** `np.linspace(start, stop, num)`
+156\. **Q:** How do you reshape an array?
+**A:** `arr.reshape(new_shape)`
+157\. **Q:** How do you perform element‑wise multiplication?
+**A:** `arr1 * arr2`
+158\. **Q:** How do you compute the dot product?
+**A:** `np.dot(arr1, arr2)` or `arr1.dot(arr2)`
+159\. **Q:** How do you compute the mean of an array?
+**A:** `arr.mean()` or `np.mean(arr)`
+160\. **Q:** How do you find indices that satisfy a condition?
+**A:** `np.where(arr > value)`
+161\. **Q:** What is SciPy?
+**A:** A library building on NumPy for advanced scientific computing (e.g., integration, optimization).
+162\. **Q:** How do you import the optimize submodule?
+**A:** `from scipy import optimize`
+163\. **Q:** How do you find the minimum of a scalar function?
+**A:** `optimize.minimize(fun, x0)`
+164\. **Q:** How do you perform numerical integration?
+**A:** `optimize.quad(func, a, b)`
+165\. **Q:** How do you solve a system of linear equations?
+**A:** `from scipy import linalg; linalg.solve(A, b)`
+166\. **Q:** How do you compute the Fast Fourier Transform?
+**A:** `from scipy.fft import fft; fft(arr)`
+167\. **Q:** How do you generate a random sample from a normal distribution?
+**A:** `np.random.normal(loc, scale, size)`
+168\. **Q:** How do you compute the eigenvalues of a matrix?
+**A:** `np.linalg.eigvals(A)`
+169\. **Q:** How do you perform singular value decomposition?
+**A:** `np.linalg.svd(A)`
+170\. **Q:** How do you solve an ODE initial‑value problem?
+**A:** `from scipy.integrate import solve_ivp; solve_ivp(fun, t_span, y0)`
+
+**SymPy (171–180)**
+171\. **Q:** What is SymPy?
+**A:** A Python library for symbolic mathematics.
+172\. **Q:** How do you import SymPy?
+**A:** `import sympy as sp`
+173\. **Q:** How do you define a symbolic variable?
+**A:** `x = sp.symbols('x')`
+174\. **Q:** How do you create a symbolic expression?
+**A:** `expr = x**2 + 2*x + 1`
+175\. **Q:** How do you simplify an expression?
+**A:** `sp.simplify(expr)`
+176\. **Q:** How do you expand an expression?
+**A:** `sp.expand((x+1)**3)`
+177\. **Q:** How do you factor a polynomial?
+**A:** `sp.factor(x**2 - 1)`
+178\. **Q:** How do you compute a derivative?
+**A:** `sp.diff(expr, x)`
+179\. **Q:** How do you perform an integral?
+**A:** `sp.integrate(expr, x)`
+180\. **Q:** How do you solve an equation symbolically?
+**A:** `sp.solve(expr, x)`
+
+**Pandas (181–200)**
+181\. **Q:** How do you import Pandas?
+**A:** `import pandas as pd`
+182\. **Q:** How do you create a Series?
+**A:** `pd.Series([1, 2, 3], index=['a','b','c'])`
+183\. **Q:** How do you create a DataFrame from a dict?
+**A:** `pd.DataFrame({'col1':[1,2], 'col2':[3,4]})`
+184\. **Q:** How do you view the first 5 rows?
+**A:** `df.head()`
+185\. **Q:** How do you view DataFrame info (dtypes, non‑null)?
+**A:** `df.info()`
+186\. **Q:** How do you select a column?
+**A:** `df['col_name']`
+187\. **Q:** How do you select multiple columns?
+**A:** `df[['col1', 'col2']]`
+188\. **Q:** How do you select rows by label?
+**A:** `df.loc['row_label']`
+189\. **Q:** How do you select rows by integer position?
+**A:** `df.iloc[0:3]`
+190\. **Q:** How do you filter rows by condition?
+**A:** `df[df['col'] > value]`
+191\. **Q:** How do you detect missing values?
+**A:** `df.isnull()` or `df.isna()`
+192\. **Q:** How do you drop rows with missing data?
+**A:** `df.dropna()`
+193\. **Q:** How do you fill missing data with a value?
+**A:** `df.fillna(value)`
+194\. **Q:** How do you add a new column based on others?
+**A:** `df['new'] = df['a'] + df['b']`
+195\. **Q:** How do you merge two DataFrames on a key?
+**A:** `pd.merge(df1, df2, on='key', how='inner')`
+196\. **Q:** How do you group by a column and compute mean?
+**A:** `df.groupby('col').mean()`
+197\. **Q:** How do you pivot a DataFrame?
+**A:** `df.pivot(index='r', columns='c', values='v')`
+198\. **Q:** How do you reshape with melt?
+**A:** `df.melt(id_vars=['id'], value_vars=['v1','v2'])`
+199\. **Q:** How do you work with time‑series index?
+**A:** Convert column: `df['date']=pd.to_datetime(df['date']); df.set_index('date', inplace=True)`
+200\. **Q:** How do you read from and write to CSV/Excel?
+**A:** `pd.read_csv('file.csv')`, `df.to_csv('out.csv')`, `pd.read_excel('file.xlsx')`, `df.to_excel('out.xlsx')`
+
+201\. **Q:** What is the difference between composition and aggregation?
+**A:** Composition implies ownership (lifecycle tied), aggregation is a loose association.
+
+202. **Q:** How do you implement operator overloading for comparison?
+     **A:** Define `__lt__`, `__le__`, `__gt__`, `__ge__`, `__eq__`, `__ne__`.
+
+203. **Q:** What is the purpose of the `__call__` method?
+     **A:** Allows an instance to be called like a function.
+
+204. **Q:** How can you make a class iterable?
+     **A:** Implement `__iter__` returning an iterator, and `__next__` in the iterator.
+
+205. **Q:** How do you implement the context‑manager protocol in a class?
+     **A:** Define `__enter__` and `__exit__` methods.
+
+206. **Q:** What’s the difference between shallow and deep copy?
+     **A:** Shallow copies references, deep copies recursively; use `copy.copy` vs `copy.deepcopy`.
+
+207. **Q:** How do you define a singleton in Python?
+     **A:** Override `__new__` to return the same instance on every call.
+
+208. **Q:** How do you implement method chaining?
+     **A:** Have methods return `self`.
+
+209. **Q:** What is the Liskov Substitution Principle?
+     **A:** Subclasses should be replaceable for their base classes without altering correctness.
+
+210. **Q:** How do you enforce interface‑like behavior without `abc`?
+     **A:** Rely on duck typing and documentation, or raise `NotImplementedError` in base methods.
+
+211. **Q:** How do you hide implementation details in Python modules?
+     **A:** Prefix internal names with a single underscore and avoid exporting them in `__all__`.
+
+212. **Q:** What is the principle of coding to an interface?
+     **A:** Depend on abstract base classes or protocols rather than concrete implementations.
+
+213. **Q:** How do you use Python’s `typing` module for static type hints on classes?
+     **A:** Use `from typing import Protocol, Generic, TypeVar` and annotate attributes/methods.
+
+214. **Q:** How do you define a generic class?
+     **A:**
+
+```python
+T = TypeVar('T')
+class Box(Generic[T]):
+    def __init__(self, content: T): self.content = content
+```
+
+215. **Q:** What is a protocol in typing?
+     **A:** A structural interface that an object must satisfy, defined with `class P(Protocol): ...`.
+     
+216\. **Q:** How do you suppress exceptions without using an empty `except`?
+**A:** Use `contextlib.suppress(ExceptionType)`.
+
+217. **Q:** How do you chain exceptions to preserve context?
+     **A:** Use `raise NewError from original_error`.
+
+218. **Q:** What does `__context__` attribute of an exception hold?
+     **A:** The previous exception implicitly chained.
+
+219. **Q:** How do you implement a retry loop on exception?
+     **A:** Wrap operation in a loop with `try…except` and break on success or max attempts reached.
+
+220. **Q:** How do you log exceptions with traceback?
+     **A:** Use `import logging; logging.exception("msg")`.
+
+221. **Q:** How can you create exception-aware decorators?
+     **A:** Wrap function in `try…except` inside the decorator and re-raise or handle accordingly.
+
+222. **Q:** How do you define cleanup actions that depend on exception type?
+     **A:** In `finally`, inspect `sys.exc_info()` or use separate `except` blocks before `finally`.
+
+223. **Q:** How do you implement transaction-like behavior in pure Python?
+     **A:** Use a context manager that commits on success in `__exit__` and rolls back on exception.
+
+224. **Q:** What is the advantage of using `with open…` over manual `try…finally`?
+     **A:** Cleaner syntax, automatically handles close even on exceptions.
+
+225. **Q:** How do you define an exception hierarchy?
+     **A:** Create base custom exception classes and subclass them for specific cases.
+
+226\. **Q:** How do you compile a regex with verbose mode?
+**A:** Use `re.VERBOSE` flag to allow whitespace and comments inside the pattern.
+
+227. **Q:** How can you inline-debug your regex?
+     **A:** Insert `(?x)` for verbose, `(?i)` for ignore‑case, etc., directly in the pattern.
+
+228. **Q:** How do you prevent catastrophic backtracking?
+     **A:** Use atomic grouping `(?>...)` or avoid nested quantifiers.
+
+229. **Q:** What is an atomic group?
+     **A:** A non‑backtracking group, defined as `(?>pattern)`.
+
+230. **Q:** How can you match balanced parentheses with regex?
+     **A:** Native regex can’t fully; use recursive patterns in PCRE or fall back to a parser.
+
+231. **Q:** How do you use regex to parse CSV safely?
+     **A:** Generally discouraged—better to use a CSV parser; regex may fail on edge cases.
+
+232. **Q:** How do you benchmark regex performance?
+     **A:** Use the `regex` module’s `regex.DEBUG` or Python’s `timeit`.
+
+233. **Q:** How do you handle very large inputs efficiently?
+     **A:** Compile once, use `finditer` with streaming, or switch to non‑regex parsing if too slow.
+
+234. **Q:** What is a possessive quantifier?
+     **A:** A quantifier that doesn’t backtrack, available in some regex engines (not Python’s `re`).
+
+235. **Q:** How do you remove nested HTML tags with regex?
+     **A:** It’s unreliable—use an HTML parser like BeautifulSoup instead.
+     
+236\. **Q:** How do you memory‑map a file for fast access?
+**A:** Use the `mmap` module: `m = mmap.mmap(f.fileno(), length)`.
+
+237. **Q:** How do you read a gzipped text file transparently?
+     **A:** Use `import gzip; with gzip.open('file.gz','rt') as f:`.
+
+238. **Q:** How do you stream large JSON lines (`.jsonl`) files?
+     **A:** Iterate over the file object and call `json.loads()` on each line.
+
+239. **Q:** How do you implement a priority queue?
+     **A:** Use `heapq` module: push with `(priority, item)` and `heappop()`.
+
+240. **Q:** How do you merge two sorted streams lazily?
+     **A:** Use `heapq.merge(stream1, stream2)`.
+
+241. **Q:** What is a double‑ended priority queue?
+     **A:** A structure supporting both `min` and `max` extraction, implementable with two heaps.
+
+242. **Q:** How do you implement a lock‑free queue?
+     **A:** Use the `queue.SimpleQueue` in CPython 3.7+, which is thread‑safe without locks.
+
+243. **Q:** How do you read and write files asynchronously?
+     **A:** Use `aiofiles` library: `import aiofiles` and `await aiofiles.open(...)`.
+
+244. **Q:** How can you watch a file for changes?
+     **A:** Use `watchdog` library or `inotify` on Linux.
+
+245. **Q:** How do you safely update a file in place?
+     **A:** Write to a temp file and use `os.replace()` to atomically swap.
+
+246\. **Q:** How do you broadcast arithmetic between arrays of different shapes?
+**A:** NumPy automatically broadcasts dimensions when one of them is 1 or missing.
+
+247. **Q:** How do you solve an eigenvalue problem in SciPy with sparse matrices?
+     **A:** Use `scipy.sparse.linalg.eigs(A, k)` for the largest k eigenvalues.
+
+248. **Q:** How do you perform symbolic matrix operations in SymPy?
+     **A:** Create a `Matrix` with `sp.Matrix(...)` and call methods like `.inv()`, `.det()`.
+
+249. **Q:** How do you optimize Pandas performance for large datasets?
+     **A:** Use categorical dtypes, chunked processing, or `DataFrame.eval()` and `query()`.
+
+250. **Q:** How do you create custom accessor methods in Pandas?
+     **A:** Use the `@pd.api.extensions.register_series_accessor` decorator to add methods.
+
+
+
+
